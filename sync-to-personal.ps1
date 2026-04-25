@@ -7,6 +7,7 @@
 #   - .git              （仓库元数据）
 #   - user-profile.md   （用户个人档案，本地数据）
 #   - dish-library.md   （用户个人菜品库，本地数据）
+#   - dish-details.md   （用户个人菜品详情库，本地数据）
 #   - meal-plan-*.md    （用户个人食谱，本地数据）
 #   - sync-to-personal.ps1（同步脚本本身不需要进个人 skill 目录）
 #   - AGENTS.md         （仓库内 agent 指令，与 skill 运行无关）
@@ -46,6 +47,7 @@ $robocopyArgs = @(
     '/XD', '.git',
     '/XF', 'user-profile.md',
     '/XF', 'dish-library.md',
+    '/XF', 'dish-details.md',
     '/XF', 'meal-plan-*.md',
     '/XF', 'sync-to-personal.ps1',
     '/XF', 'AGENTS.md',

@@ -23,8 +23,15 @@ pwsh "D:\GitClone\meal-planner-skill\sync-to-personal.ps1"
 
 - `SKILL.md`
 - `README.md`
+- `CHANGELOG.md`
 - `templates/` 下任何文件
 - 未来可能新增的 `scripts/`、`reference.md` 等结构性文件
+
+## 更新日志（每次改定义都要写）
+
+只要修改了任意 **skill 定义文件**（例如 `SKILL.md` / `templates/**` / `README.md` / 同步脚本等），必须在 `CHANGELOG.md` 的**当天日期小节**追加 1 条记录，说明这次改了什么（1-3 行即可）。
+
+> 不记录用户数据的日常变化：`dish-library.md`、`dish-details.md`、`meal-plan-*.md`、`user-profile.md` 的内容更新属于用户数据，不写进 `CHANGELOG.md`。
 
 ### 哪些是 "用户数据"（改了 → 不要同步）
 

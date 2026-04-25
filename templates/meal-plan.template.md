@@ -38,6 +38,26 @@
 
 ### 周食谱表
 
+<!--
+  默认模式：午餐 = 晚餐（正餐不区分午/晚），用下面的 3 列表格。
+  若用户档案明确写了“午餐和晚餐不一致”，才使用下方的「午晚拆分」备用表格。
+-->
+
+#### 默认：正餐不拆分（推荐）
+
+| 日期 / 周几 | 早餐 | 正餐 |
+|------------|------|------|
+| {{date_mon}} 周一 | {{mon_breakfast}} | {{mon_main_meal}} |
+| {{date_tue}} 周二 | {{tue_breakfast}} | {{tue_main_meal}} |
+| {{date_wed}} 周三 | {{wed_breakfast}} | {{wed_main_meal}} |
+| {{date_thu}} 周四 | {{thu_breakfast}} | {{thu_main_meal}} |
+| {{date_fri}} 周五 | {{fri_breakfast}} | {{fri_main_meal}} |
+| {{date_sat}} 周六 | {{sat_breakfast}} | {{sat_main_meal}} |
+| {{date_sun}} 周日 | {{sun_breakfast}} | {{sun_main_meal}} |
+
+<details>
+<summary>备用：午/晚拆分（仅当午餐和晚餐不一样时用）</summary>
+
 | 日期 / 周几 | 早餐 | 午餐 | 晚餐 |
 |------------|------|------|------|
 | {{date_mon}} 周一 | {{mon_breakfast}} | {{mon_lunch}} | {{mon_dinner}} |
@@ -47,6 +67,8 @@
 | {{date_fri}} 周五 | {{fri_breakfast}} | {{fri_lunch}} | {{fri_dinner}} |
 | {{date_sat}} 周六 | {{sat_breakfast}} | {{sat_lunch}} | {{sat_dinner}} |
 | {{date_sun}} 周日 | {{sun_breakfast}} | {{sun_lunch}} | {{sun_dinner}} |
+
+</details>
 
 > 单元格写法：`【分类】菜名` 多个用 `、` 分隔。例如：`【肉】煎鸡胸、【蛋】水煮蛋、【果】蓝莓、【主】燕麦粥`。  
 > 跨月行用 `*` 标注：例如 `{{date_sun}} 周日 *(下月)`，方便一眼看出。
@@ -60,12 +82,23 @@
   - 蛋类：{{mon_b_egg}} `[来源: dish-library.md#{{mon_b_egg_anchor}}]`
   - 水果：{{mon_b_fruit}} `[来源: dish-library.md#{{mon_b_fruit_anchor}}]`
   - 主食：{{mon_b_staple}} `[来源: dish-library.md#{{mon_b_staple_anchor}}]`
+
+<!-- 默认模式：午晚相同 → 只写一份「正餐」 -->
+- 正餐
+  - 肉菜：{{mon_m_meat}} `[来源: ...]`
+  - 素菜：{{mon_m_veg}} `[来源: ...]`
+
+<details>
+<summary>备用：午/晚拆分（仅当午餐和晚餐不一样时用）</summary>
+
 - 午餐
   - 肉菜：{{mon_l_meat}} `[来源: ...]`
   - 素菜：{{mon_l_veg}} `[来源: ...]`
 - 晚餐
   - 肉菜：{{mon_d_meat}} `[来源: ...]`
   - 素菜：{{mon_d_veg}} `[来源: ...]`
+
+</details>
 
 > 其他天按相同结构追加。如某餐次为外食/外卖，写 `外食 — 不规划`。
 

@@ -43,7 +43,7 @@ description: >-
 |---------------------|------|------|
 | **是**（仅这二类） | `dish-library.md` | 菜品库 |
 | **是**（仅这二类） | `meal-plan-YYYY-MM.md` | 按月的饮食计划 |
-| **否** | `user-profile.md`、模板、说明、本 SKILL、一切其他文件 | 一律只存在于 skill 目录；**不要**为了「方便」把档案写进用户目录 |
+| **否** | `user-profile.md`、`dish-details.md`、模板、说明、本 SKILL、一切其他文件 | 一律只存在于 skill 目录；**不要**为了「方便」把档案/详情库写进用户目录 |
 
 **如何知道用户数据目录在何处：** 打开 skill 下的 `user-profile.md`，看 **「0. 数据文件位置」** 小节。若 `菜品库与饮食计划根目录` 为**空**或写明「与 skill 同目录」，则上述两类文件与 `user-profile` 同目录。若填了**绝对路径**（如 `D:\MyMealData`），则仅在该路径下读写 `dish-library.md` 与 `meal-plan-*.md`。
 
@@ -61,18 +61,24 @@ skill 文件夹下**固定**会有（未存在的会按需创建）：
 
 ```
 meal-planner-skill/
+├── CHANGELOG.md
 ├── SKILL.md
 ├── templates/
 │   ├── user-profile.template.md
 │   ├── dish-library.template.md
+│   ├── dish-details.template.md
 │   └── meal-plan.template.md
 └── user-profile.md                # 仅此处；可记录「用户数据目录」
 ```
+
+`CHANGELOG.md` 用于记录**skill 定义**的更新（按天分节）。凡是修改了 `SKILL.md` / 模板 / README 等定义文件，都应在当天追加 1 条更新日志；用户数据的日常内容更新不写入更新日志。
 
 **下面两类文件**要么与 `user-profile.md` 同目录，要么仅在用户配置的「数据根目录」下（**仅此二类**）：
 
 - `dish-library.md`
 - `meal-plan-YYYY-MM.md`（按月份，月内按周；跨月周以**周一**所在月为准，见 Step 5）
+
+`dish-details.md`（菜品详情库）**只**在 `SKILL_DIR` 下存在，用于提供热量/食材/评价等信息；`dish-library.md` 只保存菜名。
 
 ---
 
@@ -100,11 +106,12 @@ meal-planner-skill/
 5. 后续步骤中：
    - **菜品库文件** = `DATA_ROOT/dish-library.md`（用平台路径分隔符；Windows 上写 `\` 亦可）。
    - **月份饮食计划** = `DATA_ROOT/meal-plan-YYYY-MM.md`。
-6. **`user-profile.md` 的路径永远是 `SKILL_DIR/user-profile.md`**，不随 `DATA_ROOT` 变化。
+6. **菜品详情库** = `SKILL_DIR/dish-details.md`（永不写入 `DATA_ROOT`）。
+7. **`user-profile.md` 的路径永远是 `SKILL_DIR/user-profile.md`**，不随 `DATA_ROOT` 变化。
 
 ### Step 1: 判断是否首次使用
 
-- 检查 **`SKILL_DIR/user-profile.md`** 是否存在，以及 **`DATA_ROOT/dish-library.md`** 是否存在。  
+- 检查 **`SKILL_DIR/user-profile.md`** 是否存在，以及 **`DATA_ROOT/dish-library.md`** 是否存在，以及 **`SKILL_DIR/dish-details.md`** 是否存在。  
   （若 `user-profile` 尚未存在，`DATA_ROOT` 在首次建档前可视为 `SKILL_DIR`，直到用户明确选了别的目录并写入 `user-profile` 第 0 节。首次建档的提问顺序里**先**问清是否用自定义 `DATA_ROOT`，**再**在对应位置创建 `dish-library.md`。）
 - `user-profile` 与（解析后的）`dish-library` 都存在 → **非首次**。
 - 至少缺其一 → **首次**（进入 Step 2-A 引导建档，建档过程中补齐路径与第 0 节后再建库）。
@@ -149,19 +156,20 @@ meal-planner-skill/
 
 收集完成后：
 1. 读取 `templates/user-profile.template.md`，**填写第 0 节（数据文件位置）**与全文，**保存为** `SKILL_DIR/user-profile.md`（**禁止**在 `DATA_ROOT` 下保存或复制本档案）。
-2. 根据第 0 节解析出 `DATA_ROOT`（同 Step 0 规则），再读取 `templates/dish-library.template.md`，**至少为以下每个分类各预填 3-5 道符合用户偏好的菜品**，保存为 **`DATA_ROOT/dish-library.md`**。
+2. 根据第 0 节解析出 `DATA_ROOT`（同 Step 0 规则），读取 `templates/dish-library.template.md`，**按分类预填菜名**，保存为 **`DATA_ROOT/dish-library.md`**（本文件只含菜名）。
+3. 读取 `templates/dish-details.template.md`，为上述菜名逐条补齐详情（热量/食材/添加日期/评价/状态），保存为 **`SKILL_DIR/dish-details.md`**（仅此处；不要写到 `DATA_ROOT`）。
    - 早餐：肉类、蛋类、水果、主食
    - 正餐：肉菜、素菜
    - （若用户选择了汤/主食等额外分类，也建立对应分组）
-3. 把生成的菜品库**展示给用户确认/补充/删减**。明确告知："菜品库会随使用持续迭代，你可以随时让我加菜、删菜或调整；饮食计划会按月存成 `meal-plan-YYYY-MM.md`，都只在**第 0 节指定的目录**（若与 skill 同目录则与 skill 并列）。"
-4. 完成确认后，再进入 Step 3。
+4. 把生成的菜名库**展示给用户确认/补充/删减**；并说明：详情在 `dish-details.md`，后续加菜会同时更新两处。
+5. 完成确认后，再进入 Step 3。
 
 > 非首次、用户**以后**在对话中要求**更换** `DATA_ROOT` 时：只改 `user-profile.md` 第 0 节；**不要**在旧目录**新建** `user-profile` 或任何杂项。若新目录尚未有 `dish-library.md`，**询问**是迁移旧库还是新建（用户确认后再操作）；迁移时只复制/移动**允许的**两类文件，不复制 `user-profile` 到数据目录。
 
 ### Step 2-B: 非首次 — 加载档案
 
 1. 先按 **Step 0** 重算 `DATA_ROOT`（已读入 `user-profile` 后路径即确定）。  
-2. 读取 `SKILL_DIR/user-profile.md` 与 `DATA_ROOT/dish-library.md`。  
+2. 读取 `SKILL_DIR/user-profile.md`、`DATA_ROOT/dish-library.md` 与 `SKILL_DIR/dish-details.md`。  
 3. 简要回顾："已加载你的偏好档案和 N 道菜的菜品库（库路径：…）。本周有什么饮食期望？"
 
 ### Step 3: 解析"本周饮食期望"
@@ -208,8 +216,7 @@ meal-planner-skill/
    - **不存在** → 用模板新建该月文件，填充"月份信息（年月、归属规则说明，可注明 `数据根目录: DATA_ROOT`）"，再追加本周小节。
    - **已存在** → **不要整文件覆盖**。打开后**追加**一个新的周小节。
 4. 周小节的固定标题格式：`## 周食谱 {{start_date}} ~ {{end_date}}`（例如 `## 周食谱 2026-04-27 ~ 2026-05-03`）。
-5. 周小节内按用户档案中的"早餐结构"和"正餐结构"逐天填充菜品（仅从 `DATA_ROOT/dish-library.md` 选）。
-6. 周小节顶部写明：**本周期望、约束、生成日期**。每道菜后标注来源，须含**可定位路径**，例如：`` [来源: D:\Data\dish-library.md#菜名] `` 或相对表述与 `user-profile` 第 0 节一致，避免与 skill 同目录时歧义。
+5. 周小节内按用户档案中的"早餐结构"和"正餐结构"逐天填充菜品：\n   - **选菜来源**：只从 `DATA_ROOT/dish-library.md` 里出现过的菜名中选。\n   - **详情来源**：从 `SKILL_DIR/dish-details.md` 查对应条目（热量/食材/评价/状态）。若菜名在库里但详情缺失，先问用户补齐并写入详情库，再生成食谱。\n   - **午餐/晚餐展示规则**：若用户档案明确写了“午餐和晚餐一致/相同”，则在输出文件中**不重复写两遍**，统一使用“正餐”一栏（周表为：日期/早餐/正餐；每日详情为：早餐 + 正餐）。只有当用户档案明确表示午餐与晚餐不同，才拆分为“午餐/晚餐”两栏与两段详情。\n+6. 周小节顶部写明：**本周期望、约束、生成日期**。每道菜后标注来源，须含**可定位路径**，例如：`` [来源: D:\Data\dish-library.md#菜名; 详情: SKILL_DIR\\dish-details.md#菜名] ``。
 7. 周小节末尾追加**本周采购清单**（按"蛋白质 / 蔬菜 / 水果 / 主食 / 调味/其他"分组，合并同食材数量）。
 8. 文件**末尾**维护一个"本月所有周"目录索引，新增周后追加一行链接锚点。
 
@@ -236,29 +243,28 @@ meal-planner-skill/
 三个模板位于 `templates/`，由 agent 在第一次使用或新增条目时**读取**并按结构填写。模板里的 `{{占位符}}` 必须被替换为真实内容；不要把占位符留在最终文件里。
 
 - `templates/user-profile.template.md` — 用户档案结构。
-- `templates/dish-library.template.md` — 菜品库结构（含每道菜的字段：食材、热量估算、烹饪时间、做法要点、标签）。
+- `templates/dish-library.template.md` — 菜名库：只包含各分类的「菜名速查区（仅菜名，多列一行便于快速查阅；无标题、无表头文字）」。不含详情字段。
+- `templates/dish-details.template.md` — 菜品详情库：按分类维护每道菜的详情（热量、所需食材、添加日期、用户评价、状态/停用原因）。
 - `templates/meal-plan.template.md` — 月份食谱文件结构：含月份头 + 一个或多个"周小节"（周表 + 详情 + 采购清单）+ 月底周索引。
 
 ---
 
 ## 迭代菜品库的规则
 
-每次新增菜品到 `dish-library.md` 必须包含以下字段（与模板对齐）：
+每次新增菜品时：\n- 先把菜名加入 `DATA_ROOT/dish-library.md` 对应分类的速查区\n- 再把详情写入 `SKILL_DIR/dish-details.md`（与模板对齐）。\n\n每个详情条目必须包含以下最小字段：
 
 ```
 - 名称：
   分类：早餐-肉类 / 早餐-蛋类 / 早餐-水果 / 早餐-主食 / 正餐-肉菜 / 正餐-素菜 / 其他
-  主要食材：
-  烹饪时间(分钟)：
-  估算热量(kcal/份)：
-  口味标签：[低油][低盐][高蛋白][减脂友好][快手] 等
-  做法要点：1-3 句话
+  热量(kcal/份)：
+  所需食材：
   添加日期：YYYY-MM-DD
-  用户评价：⭐ ⭐ ⭐ ⭐ ⭐（首次添加留空，吃过后由用户反馈打分）
+  用户评价：⭐ ⭐ ⭐ ⭐ ⭐（首次添加可留空，吃过后由用户反馈打分）
+  状态：启用 / 已停用 (原因)
 ```
 
-- 用户说"这道菜不好吃 / 吃腻了" → 在条目末尾追加 `状态：已停用 (原因)`，**不要直接删除**，方便日后回看。
-- 用户说"这道菜很喜欢" → 提升评价并加 `[最爱]` 标签，规划时优先级 +1。
+- 用户说"这道菜不好吃 / 吃腻了" → 在详情里把 `状态` 改为 `已停用 (原因)`；**不要直接删除**，方便日后回看。（菜名表格仍保留该菜名，便于历史查阅）
+- 用户说"这道菜很喜欢" → 提升详情里的 `用户评价`（⭐）。
 
 ---
 

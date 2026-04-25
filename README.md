@@ -13,7 +13,8 @@
 ## 文件结构
 
 - **始终只在 skill 目录**：`SKILL.md`、`README.md`、`templates/**`、`user-profile.md`（档案**不会**进下面的「数据根目录」）。
-- **可放在你指定的根目录`DATA_ROOT`（只限二类）**：`dish-library.md`、`meal-plan-YYYY-MM.md`。  
+- **始终只在 skill 目录**：`dish-details.md`（菜品详情库：热量/食材/日期/评价/停用；不会进入「数据根目录」）。  
+- **可放在你指定的根目录`DATA_ROOT`（只限二类）**：`dish-library.md`（仅菜名）、`meal-plan-YYYY-MM.md`。  
   在 `user-profile.md` 的 **「0. 数据文件位置」** 中填写想用的**绝对路径**；留空则 `DATA_ROOT` 与 skill 同目录。  
 - **除上述二类外，不得**在 `DATA_ROOT` 中创建或迁移其它任何文件；详见主指令 `SKILL.md` 中的「数据路径」。
 
@@ -23,9 +24,10 @@ meal-planner-skill/                    # 或用户 skill 下的同名文件夹
 ├── README.md
 ├── templates/ …
 └── user-profile.md                    # 只在这里；内含 DATA_ROOT 配置
+└── dish-details.md                    # 只在这里；菜品详情（热量/食材/日期/评价/停用）
 
 {DATA_ROOT}/                           # 可能等于上目录，或为你单独指定的绝对路径
-├── dish-library.md
+├── dish-library.md                    # 仅菜名
 └── meal-plan-YYYY-MM.md
 ```
 
