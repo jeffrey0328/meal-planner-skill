@@ -28,15 +28,15 @@ pwsh "D:\GitClone\meal-planner-skill\sync-to-personal.ps1"
 
 ### 哪些是 "用户数据"（改了 → 不要同步）
 
-这些文件在两边各自独立，**不同步、不互相覆盖**：
+这些在版本库/个人 skill 与日常使用时**不随同步脚本**互相覆盖，由用户本地、对话中管理：
 
-| 文件 | 性质 |
-|------|------|
-| `user-profile.md` | 用户个人偏好档案 |
-| `dish-library.md` | 用户私人菜品库 |
-| `meal-plan-YYYY-MM.md` | 用户每月食谱 |
+| 文件 / 位置 | 性质 |
+|------------|------|
+| `user-profile.md` | 始终在** skill 根目录**；可含第 0 节「`DATA_ROOT`」指向**外部绝对路径** |
+| `dish-library.md` | 默认在 skill 同目录，否则在 **user-profile 第 0 节** 的 `DATA_ROOT`（仅**允许**在 `DATA_ROOT` 中存在的两类用户文件之一） |
+| `meal-plan-YYYY-MM.md` | 同上，与 `dish-library` 始终同根，且**只**有这两类可放在 `DATA_ROOT`；**不要**在 `DATA_ROOT` 放档案、说明或其它文件 |
 
-> 同步脚本已经在 `/XF` 里排除以上文件，正常调用脚本不会误传。
+> 同步脚本在 `/XF` 里已排除 `user-profile`、菜品库、月份食谱的**文件名**（以免覆盖 skill 目录下的本地副本；若 `DATA_ROOT` 在外部盘，本脚本本来就不触及，需自行备份）。
 
 ### 仓库元/工具文件（也不同步）
 

@@ -12,17 +12,21 @@
 
 ## 文件结构
 
+- **始终只在 skill 目录**：`SKILL.md`、`README.md`、`templates/**`、`user-profile.md`（档案**不会**进下面的「数据根目录」）。
+- **可放在你指定的根目录`DATA_ROOT`（只限二类）**：`dish-library.md`、`meal-plan-YYYY-MM.md`。  
+  在 `user-profile.md` 的 **「0. 数据文件位置」** 中填写想用的**绝对路径**；留空则 `DATA_ROOT` 与 skill 同目录。  
+- **除上述二类外，不得**在 `DATA_ROOT` 中创建或迁移其它任何文件；详见主指令 `SKILL.md` 中的「数据路径」。
+
 ```
-meal-planner-skill/
-├── SKILL.md                       # 主指令（agent 读这个）
-├── README.md                      # 本文件
-├── templates/
-│   ├── user-profile.template.md
-│   ├── dish-library.template.md
-│   └── meal-plan.template.md
-├── user-profile.md                # 首次使用后生成
-├── dish-library.md                # 首次使用后生成
-└── meal-plan-YYYY-MM.md           # 按月归档，月内按周追加；跨月以"该周周一所在月"为准
+meal-planner-skill/                    # 或用户 skill 下的同名文件夹
+├── SKILL.md
+├── README.md
+├── templates/ …
+└── user-profile.md                    # 只在这里；内含 DATA_ROOT 配置
+
+{DATA_ROOT}/                           # 可能等于上目录，或为你单独指定的绝对路径
+├── dish-library.md
+└── meal-plan-YYYY-MM.md
 ```
 
 ## 安装与启用
@@ -50,7 +54,7 @@ meal-planner-skill/
 ## 与 agent 的协作约定
 
 - 所有菜必须来自菜品库，缺菜会先问你能不能加。
-- 食谱默认存到本 skill 文件夹，**除非你在请求里明确说"存到 X 路径"**。
+- 菜品库与月饮食计划落在 **`user-profile` 里配置的 `DATA_ROOT`**；**只有** `dish-library.md` 和 `meal-plan-*.md` 可以进该目录，其它文件**不会**被写进那里。换目录=改第 0 节，不拆成多套路径；详见 `SKILL.md`。
 - 反馈"不好吃 / 吃腻了"会让对应菜被标记停用而不是被删除，方便日后恢复。
 - 反馈"很喜欢"会给菜加 `[最爱]` 标签，下周排菜时优先级更高。
 

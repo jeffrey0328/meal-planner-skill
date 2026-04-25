@@ -1,8 +1,9 @@
 # 食谱 — {{year}} 年 {{month}} 月
 
-> 由 meal-planner-skill 维护。**按月份分文件**，文件名 `meal-plan-YYYY-MM.md`。  
+> 由 meal-planner-skill 维护。**按月份分文件**，文件名 `meal-plan-YYYY-MM.md`，与 `dish-library.md` 位于同一 **`DATA_ROOT`**（见 `user-profile` 第 0 节；若同 skill 同目录，二者并列即可）。  
 > 每周以独立小节追加在下方。**跨月的一周以"该周周一所在月份"为准**：周一在本月就归本月，周日在不在本月不影响归属。  
-> 所有菜品均引用自 `dish-library.md`；如需替换，请直接编辑本文件并同步更新菜品库。
+> 所有菜品均引用自 **`DATA_ROOT/dish-library.md`**；来源行须写**可定位路径**。  
+> **不要**在 `DATA_ROOT` 中创建除本文件与菜品库外的其它内容。
 
 ## 月份信息
 

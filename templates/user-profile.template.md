@@ -2,6 +2,18 @@
 
 > 由 meal-planner-skill 在首次使用时根据用户回答自动填写。  
 > 后续可被用户或 agent 增量更新。**修改后请同步更新底部"档案版本"日期。**
+>
+> **本文件只保存在 skill 根目录，永不存在于「数据根目录」中。**
+
+## 0. 数据文件位置
+
+> `DATA_ROOT`：菜品库 + 月饮食计划**唯一**允许读写的外部根；与 skill 中本档案分离。
+
+- **菜品库与饮食计划根目录（`DATA_ROOT`）**：{{data_root_path}}
+  - 留空 或 填「与 skill 同目录 / 默认」：则 `dish-library.md` 与 `meal-plan-YYYY-MM.md` 与**本档同目录**（即 skill 根目录）。
+  - 若填写**绝对路径**（如 `D:\MyMealData`）：**仅**在该目录读写 `dish-library.md` 与 `meal-plan-*.md`。**不要**将本文件、模板或其它任何内容写入该路径。
+
+- **上次确认日期**：{{data_root_set_date}}（换目录时更新）
 
 ## 1. 基本信息
 
@@ -75,7 +87,7 @@
 
 - 同一道菜一周最多出现：{{max_repeat_per_week}} 次（默认 2）
 - 默认重复度：{{default_variety}}（高/中/低）
-- 默认存放路径：当前 skill 文件夹，文件名 `meal-plan-YYYY-Www.md`
+- 饮食计划文件：`DATA_ROOT` 下 `meal-plan-YYYY-MM.md`（`DATA_ROOT` 见第 0 节）
 
 ---
 
