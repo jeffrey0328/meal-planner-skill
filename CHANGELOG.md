@@ -5,6 +5,12 @@
 
 ---
 
+## 2026-05-12
+
+- 按 `jeffrey-workflow-skill` 补充 **双通道**：新增根目录 **`human-guide.html`**（仅描述本 skill，非照搬其它仓库 HTML）；**`README.md`** 增加「本目录怎么读」表与树中的相关条目。
+- **`SKILL.md`** 增加 **仓库文件索引** 表，便于对照 `README` / `human-guide.html` / 模板与脚本。
+- **`human-guide.html`**：去掉独立「Git 与远程」区块；远端与 `.gitignore` 仅在目录表下用一行说明（Git 非每仓必备，见 `jeffrey-workflow-skill` §2.2）。
+
 ## 2026-04-26
 
 - 初始化 `meal-planner-skill`（显式点名调用、按月食谱归档、DATA_ROOT 规则）

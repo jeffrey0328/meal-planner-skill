@@ -2,6 +2,16 @@
 
 一个 Cursor Agent Skill：根据你的饮食偏好和当周饮食目标，从你私人维护的菜品库里挑菜，生成定制化的一周食谱并自动写入文件。
 
+## 本目录怎么读（jeffrey-workflow 双通道）
+
+| 文件 | 给谁 | 说明 |
+|------|------|------|
+| **README.md**（本文件） | 人 | 一页总览：功能、路径、安装方式。 |
+| **human-guide.html** | 人 | 中文读本：左导航 + 简介 / 数据与触发规则 / 目录树（**不要求**单独「Git 与远程」一节；详见 `jeffrey-workflow-skill` **§2.2**）。 |
+| **SKILL.md** | Agent | 主规范：显式调用、数据路径、Step 0–6 工作流（正文为中文）。 |
+
+Skill 编写与 Git 协作的通用约定见 **`jeffrey-workflow-skill`**（不要把别的 skill 的 `human-guide.html` 整页拷进本目录）。
+
 ## 功能特点
 
 - **首次自动建档**：会问清你的早餐 / 正餐结构、忌口、健康目标、厨房工具、菜系偏好，然后生成 `user-profile.md`。
@@ -22,9 +32,13 @@
 meal-planner-skill/                    # 或用户 skill 下的同名文件夹
 ├── SKILL.md
 ├── README.md
+├── human-guide.html                   # 人类读本（中文页面）
+├── CHANGELOG.md                       # skill 定义变更日志
+├── AGENTS.md                          # 可选：仓库级 agent 说明
+├── sync-to-personal.ps1               # 可选：同步脚本
 ├── templates/ …
-└── user-profile.md                    # 只在这里；内含 DATA_ROOT 配置
-└── dish-details.md                    # 只在这里；菜品详情（热量/食材/日期/评价/停用）
+├── user-profile.md                    # 只在这里；内含 DATA_ROOT 配置（运行时生成）
+└── dish-details.md                    # 只在这里；菜品详情（运行时生成）
 
 {DATA_ROOT}/                           # 可能等于上目录，或为你单独指定的绝对路径
 ├── dish-library.md                    # 仅菜名

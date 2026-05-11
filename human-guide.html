@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!--
+  meal-planner-skill only. Authored for this skill (jeffrey-workflow §2.2.1).
+  Do not replace this file with a wholesale copy of jeffrey-workflow-skill/human-guide.html.
+-->
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>食谱规划 Skill · 人类读本</title>
+  <style>
+    :root {
+      --bg: #f4f7f4;
+      --surface: #fff;
+      --text: #1a1f1a;
+      --muted: #5f6b5f;
+      --accent: #15803d;
+      --accent-soft: #dcfce7;
+      --border: #d4e4d4;
+      --sidebar-w: 15rem;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    .page-header {
+      background: linear-gradient(115deg, #14532d, #15803d);
+      color: #fff;
+      padding: 1.45rem 1.25rem 1.6rem;
+    }
+    .page-header h1 { margin: 0 0 0.45rem; font-size: 1.26rem; font-weight: 650; }
+    .page-header p { margin: 0; opacity: 0.94; max-width: 46rem; font-size: 0.94rem; }
+    .layout {
+      display: flex;
+      align-items: flex-start;
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 1rem 0.75rem 2.5rem;
+      min-height: 55vh;
+    }
+    .sidebar {
+      flex: 0 0 var(--sidebar-w);
+      position: sticky;
+      top: 0;
+      align-self: flex-start;
+      max-height: 100vh;
+      overflow-y: auto;
+      padding: 0.5rem 0.75rem 1rem 0;
+      border-right: 1px solid var(--border);
+      background: linear-gradient(180deg, #f8faf8 0%, var(--bg) 45%);
+    }
+    .sidebar-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.45rem 0.35rem;
+    }
+    .sidebar nav a {
+      display: block;
+      padding: 0.42rem 0.55rem;
+      margin-bottom: 2px;
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.88rem;
+      border-left: 3px solid transparent;
+    }
+    .sidebar nav a:hover { background: var(--accent-soft); color: var(--accent); }
+    .sidebar nav a.nav-sub {
+      padding-left: 1.1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+    .content { flex: 1; min-width: 0; padding: 0.2rem 0 0 1.15rem; }
+    section.block {
+      scroll-margin-top: 0.75rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.1rem 1.25rem 1.2rem;
+      margin-bottom: 0.95rem;
+      box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+    }
+    section.block > h2 {
+      font-size: 1.05rem;
+      margin: 0 0 0.75rem;
+      color: #0f172a;
+      padding-bottom: 0.45rem;
+      border-bottom: 1px solid var(--border);
+    }
+    section.block h3 {
+      font-size: 0.96rem;
+      margin: 1rem 0 0.45rem;
+      color: #1e293b;
+    }
+    section.block h3:first-of-type { margin-top: 0; }
+    ul, ol { margin: 0.35rem 0 0; padding-left: 1.15rem; }
+    li { margin: 0.32rem 0; }
+    p { margin: 0.45rem 0 0; }
+    p:first-child { margin-top: 0; }
+    .muted { color: var(--muted); font-size: 0.92rem; }
+    code.path {
+      font-size: 0.85em;
+      background: #f1f5f9;
+      padding: 0.06rem 0.32rem;
+      border-radius: 4px;
+      word-break: break-all;
+    }
+    .file-tree {
+      margin: 0.65rem 0 0;
+      padding: 0.8rem 0.95rem;
+      background: #f8faf8;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-family: ui-monospace, Consolas, monospace;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      overflow-x: auto;
+      white-space: pre;
+    }
+    .file-note { margin-top: 0.85rem; border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+    .file-note th, .file-note td {
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.55rem;
+      text-align: left;
+      vertical-align: top;
+    }
+    .file-note th { background: #f1f5f9; font-weight: 600; }
+    @media (max-width: 800px) {
+      .layout { flex-direction: column; }
+      .sidebar {
+        position: relative;
+        flex: none;
+        width: 100%;
+        max-height: none;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .content { padding: 0.75rem 0 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="page-header">
+    <h1>食谱规划（meal-planner-skill）· 人类读本</h1>
+    <p>从<strong>你的菜品库</strong>排一周食谱，并把结果写入<strong>按月归档</strong>的饮食计划文件。本页只描述本 skill 的分工与路径；完整步骤与约束见同目录 <code class="path">SKILL.md</code>。</p>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar" aria-label="页面导航">
+      <p class="sidebar-title">导航</p>
+      <nav>
+        <a href="#section-intro">简介</a>
+        <a href="#section-detail">详细介绍</a>
+        <a class="nav-sub" href="#detail-invoke">— 何时点名调用</a>
+        <a class="nav-sub" href="#detail-path">— 数据放在哪</a>
+        <a class="nav-sub" href="#detail-flow">— 工作流概要</a>
+        <a href="#section-files">目录与文件</a>
+      </nav>
+    </aside>
+
+    <div class="content">
+      <section class="block" id="section-intro">
+        <h2>简介</h2>
+        <p><code class="path">meal-planner-skill</code> 让 Agent 读取你在 skill 目录下的<strong>用户档案</strong>与<strong>菜品详情库</strong>，只在<strong>你明确点名</strong>本 skill 时，按「当周期望」从 <code class="path">dish-library.md</code> 选菜并写入 <code class="path">meal-plan-YYYY-MM.md</code>。</p>
+        <p class="muted">随口聊吃喝、不问正式排餐时，不应自动跑本 skill——详见下文「何时点名调用」。</p>
+      </section>
+
+      <section class="block" id="section-detail">
+        <h2>详细介绍</h2>
+
+        <h3 id="detail-invoke">何时点名调用</h3>
+        <p>仅在对话里<strong>明确提到</strong> <code class="path">meal-planner-skill</code>（或等价语句）时启用排餐工作流。泛泛问菜谱、热量、做法而不点名本 skill 时，按普通问答处理。</p>
+        <ul>
+          <li>示例触发：「用 meal-planner-skill 帮我排下周」「调用食谱规划 skill」。</li>
+          <li>不确定时先问一句：是要<strong>正式读写档案与菜品库</strong>排一周，还是随便聊聊。</li>
+        </ul>
+
+        <h3 id="detail-path">数据放在哪</h3>
+        <ul>
+          <li><strong>永远在 skill 目录</strong>：<code class="path">user-profile.md</code>、<code class="path">dish-details.md</code>、<code class="path">templates/</code>、本 skill 说明文件。</li>
+          <li><strong>仅在「数据根目录」<code class="path">DATA_ROOT</code></strong>（由 <code class="path">user-profile.md</code> 第 0 节配置）：<code class="path">dish-library.md</code>（菜名）与 <code class="path">meal-plan-YYYY-MM.md</code>（按月计划）。除此二类外勿在用户目录新建其它文件。</li>
+          <li>跨月的一周归属：看该周<strong>周一</strong>落在哪个月，详见 <code class="path">SKILL.md</code> Step 5。</li>
+        </ul>
+
+        <h3 id="detail-flow">工作流概要</h3>
+        <p>Agent 按 <code class="path">SKILL.md</code> 中的 Step 0→6：解析数据根 → 是否首次建档 → 解析当周期望 → 检查菜品库 → 写入月份文件 → 聊天里给摘要并询问是否迭代。缺菜时先补库再排餐。</p>
+      </section>
+
+      <section class="block" id="section-files">
+        <h2>目录与文件结构</h2>
+        <p>技能根目录名示例：<code class="path">meal-planner-skill/</code>（可放在 <code class="path">~/.cursor/skills/</code>）。</p>
+
+        <pre class="file-tree" aria-label="目录树">meal-planner-skill/
+├── README.md                 # 给人：总览
+├── human-guide.html          # 给人：本页
+├── SKILL.md                  # Agent：主规范
+├── CHANGELOG.md              # skill 定义变更日志
+├── AGENTS.md                 # 可选
+├── sync-to-personal.ps1      # 可选同步脚本
+├── templates/
+│   ├── user-profile.template.md
+│   ├── dish-library.template.md
+│   ├── dish-details.template.md
+│   └── meal-plan.template.md
+├── user-profile.md           # 运行时：档案（仅 SKILL 目录）
+└── dish-details.md           # 运行时：菜品详情（仅 SKILL 目录）
+
+{DATA_ROOT}/                  # 由 user-profile 第 0 节指定；可与上并列或独立路径
+├── dish-library.md
+└── meal-plan-YYYY-MM.md</pre>
+
+        <table class="file-note">
+          <thead>
+            <tr><th>路径</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code class="path">README.md</code></td>
+              <td>人类入口：功能、安装、隐私提示。</td>
+            </tr>
+            <tr>
+              <td><code class="path">human-guide.html</code></td>
+              <td>本页：导航 + 数据边界摘要。</td>
+            </tr>
+            <tr>
+              <td><code class="path">SKILL.md</code></td>
+              <td>显式调用规则与完整步骤。</td>
+            </tr>
+            <tr>
+              <td><code class="path">templates/</code></td>
+              <td>建档与输出结构模板。</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="muted">若将本仓库推送到 GitHub 等远端：授权与提交节奏见 <code class="path">jeffrey-workflow-skill/SKILL.md</code> §2.4；个人数据是否在版本库中公开，见 <code class="path">README.md</code> 隐私与 <code class="path">.gitignore</code> 建议。</p>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

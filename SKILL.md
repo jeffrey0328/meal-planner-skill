@@ -12,6 +12,17 @@ description: >-
 
 # Meal Planner Skill (一周食谱规划)
 
+## 仓库文件索引
+
+| 路径 | 用途 |
+|------|------|
+| `README.md` | 给人：做什么、何时用、`DATA_ROOT` 约定、安装路径 |
+| `human-guide.html` | 给人：中文导航页（与本 skill 一致；勿照搬其他 skill 的 HTML） |
+| `SKILL.md` | 给 Agent：显式调用规则与 Step 0–6 |
+| `CHANGELOG.md` | skill 定义变更记录 |
+| `templates/*.template.md` | 建档与菜品库、月计划模板 |
+| `sync-to-personal.ps1` | 可选同步脚本 |
+
 本 skill 根据用户的**饮食偏好**和**当周饮食期望**，从一个**已建立的菜品库**中挑选菜品，生成定制化的一周食谱。
 
 ## 何时使用本 skill（重要）
